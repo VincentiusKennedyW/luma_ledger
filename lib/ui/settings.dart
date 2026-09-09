@@ -346,15 +346,13 @@ class _WelcomePageState extends State<WelcomePage> {
             const SizedBox(height: 20),
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Icon(
-                    Icons.account_balance_wallet_rounded,
-                    color: Theme.of(context).colorScheme.onPrimary,
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.asset(
+                    'assets/luma-icon.png',
+                    width: 48,
+                    height: 48,
+                    excludeFromSemantics: true,
                   ),
                 ),
                 const SizedBox(width: 12),

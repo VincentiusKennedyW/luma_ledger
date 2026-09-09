@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
-  <title>Luma Ledger — three ascending bars</title>
-  <path fill="#173f35" d="M0 0h1024v1024H0z"/>
-  <g fill="#d9ebcf">
-    <rect x="256" y="552" width="128" height="240" rx="64"/>
-    <rect x="448" y="392" width="128" height="400" rx="64"/>
-    <rect x="640" y="232" width="128" height="560" rx="64"/>
-  </g>
-</svg>
