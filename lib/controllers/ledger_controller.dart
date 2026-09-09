@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../core/models.dart';
+import '../core/statistics.dart';
 import '../data/database.dart';
 
 class LedgerController extends GetxController {
@@ -13,6 +14,39 @@ class LedgerController extends GetxController {
   final budgets = <DbRow>[].obs, recurring = <DbRow>[].obs;
   final activeId = ''.obs, tab = 0.obs, busy = false.obs, theme = 'light'.obs;
   final period = Period.month(DateTime.now()).obs;
+  final statisticsScale = StatisticsScale.month.obs;
+  final statisticsAnchor = DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+  ).obs;
+  LedgerStatistics get statistics => LedgerStatistics(
+    entries.toList(),
+    scale: statisticsScale.value,
+    anchor: statisticsAnchor.value,
+  );
+
+  void showStatisticsEntries(
+    Period range, {
+    EntryKind kind = EntryKind.expense,
+    String category = 'all',
+    String wallet = 'all',
+  }) {
+    final now = DateTime.now();
+    final tomorrow = DateTime(now.year, now.month, now.day + 1);
+    period.value = Period(
+      range.start,
+      range.end.isAfter(tomorrow) ? tomorrow : range.end,
+      range.label,
+    );
+    search.value = '';
+    searchInput.clear();
+    typeFilter.value = kind.name;
+    categoryFilter.value = category;
+    walletFilter.value = wallet;
+    reviewOnly.value = false;
+    tab.value = 1;
+  }
+
   final searchInput = TextEditingController();
   final search = ''.obs,
       typeFilter = 'all'.obs,

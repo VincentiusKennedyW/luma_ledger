@@ -63,3 +63,6 @@ expenses_*.csv
 .impeccable/mocks/
 .impeccable/decisions/
 .impeccable/build/
+
+.impeccable/questions/
+android/.kotlin/
