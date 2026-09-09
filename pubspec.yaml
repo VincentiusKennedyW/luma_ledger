@@ -1,0 +1,31 @@
+name: luma_ledger
+description: A private, offline expense tracker built with Flutter, GetX and SQLite.
+publish_to: none
+version: 1.1.0+2
+environment:
+  sdk: '>=3.9.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  get: ^4.7.2
+  sqflite: ^2.4.2
+  path: ^1.9.1
+  intl: ^0.20.2
+  csv: ^6.0.0
+  crypto: ^3.0.6
+  file_picker: ^8.3.7
+  share_plus: ^10.1.4
+  path_provider: ^2.1.5
+  cross_file: ^0.3.4+2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
