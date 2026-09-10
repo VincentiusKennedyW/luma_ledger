@@ -10,6 +10,8 @@
 
 `lib/ui/` includes native Material screens, semantic theme tokens and reusable components. There are four top-level destinations: Overview, Activity, Insights and Plan. Named in-app routes cover import, export, transaction editing, wallets, recurring entries and settings. OS universal/app-link registration is not configured.
 
+`lib/core/statistics.dart` derives monthly/yearly reports from one selected ledger without storage changes. It owns calendar comparisons, future/partial bucket states and spending summaries. Calendar-day arithmetic is independent of daylight-saving hour counts. `lib/ui/insights.dart` presents this model and the controller owns the selected statistics scale/anchor separately from Activity filters. Drill-down deliberately replaces Activity filters; returning to Insights preserves the statistics anchor.
+
 ## Tables
 
 | Table | Purpose |

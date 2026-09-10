@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const forest = Color(0xFF087A50),
-      mint = Color(0xFFEAF8F0),
-      paper = Color(0xFFFFFFFF);
-  static const ink = Color(0xFF17251E),
-      muted = Color(0xFF66736B),
-      line = Color(0xFFE5ECE7);
-  static const orange = Color(0xFF8A532A),
-      blue = Color(0xFF397B60),
-      lavender = Color(0xFF5C876C);
-  static const white = Color(0xFFFFFFFF),
-      dark = Color(0xFF111A15),
-      darkCard = Color(0xFF1A2820);
-  static const darkText = Color(0xFFF2F7F3),
-      darkMuted = Color(0xFFACBDB0),
-      darkLine = Color(0xFF344D3E);
-  static const bright = Color(0xFF20A66D),
-      pale = Color(0xFFF5F8F6),
-      lime = Color(0xFFBDE7CE);
+  static const forest = Color(0xFF4056A1),
+      mint = Color(0xFFE6EAF8),
+      paper = Color(0xFFF7F5F0);
+  static const ink = Color(0xFF242938),
+      muted = Color(0xFF616471),
+      line = Color(0xFFDCDDDC);
+  static const orange = Color(0xFFAD5238),
+      blue = Color(0xFF4056A1),
+      lavender = Color(0xFF75679D);
+  static const white = Color(0xFFFFFEFB),
+      dark = Color(0xFF191C26),
+      darkCard = Color(0xFF222634);
+  static const darkText = Color(0xFFF1F0EA),
+      darkMuted = Color(0xFFB8BDCB),
+      darkLine = Color(0xFF424858);
+  static const bright = Color(0xFFAAC0FF),
+      pale = Color(0xFFF0EFEA),
+      lime = Color(0xFFC9D1EC);
 }
 
 ThemeData lumaTheme(Brightness brightness) {
@@ -28,18 +28,20 @@ ThemeData lumaTheme(Brightness brightness) {
         seedColor: AppColors.forest,
         brightness: brightness,
       ).copyWith(
-        primary: dark ? const Color(0xFF75D6A5) : AppColors.forest,
+        primary: dark ? const Color(0xFFB5C5FF) : AppColors.forest,
         onPrimary: dark ? AppColors.dark : AppColors.white,
-        primaryContainer: dark ? const Color(0xFF213C2D) : AppColors.mint,
+        primaryContainer: dark ? const Color(0xFF303C67) : AppColors.mint,
         onPrimaryContainer: dark ? AppColors.darkText : AppColors.forest,
         surface: dark ? AppColors.darkCard : AppColors.white,
-        surfaceContainerLowest: dark ? AppColors.dark : AppColors.white,
-        surfaceContainerLow: dark ? const Color(0xFF16231B) : AppColors.pale,
+        surfaceContainerLowest: dark ? AppColors.dark : AppColors.paper,
+        surfaceContainerLow: dark ? const Color(0xFF282D3B) : AppColors.pale,
         onSurface: dark ? AppColors.darkText : AppColors.ink,
         onSurfaceVariant: dark ? AppColors.darkMuted : AppColors.muted,
         outlineVariant: dark ? AppColors.darkLine : AppColors.line,
-        outline: dark ? AppColors.darkMuted : const Color(0xFF879B8D),
-        secondary: dark ? const Color(0xFFBAD8C5) : const Color(0xFF497A60),
+        outline: dark ? AppColors.darkMuted : const Color(0xFF7B7F8C),
+        secondary: dark ? const Color(0xFFFFB59E) : const Color(0xFFAD5238),
+        tertiary: dark ? const Color(0xFF8BD5BB) : const Color(0xFF276955),
+        onSecondary: dark ? AppColors.dark : AppColors.white,
         error: dark ? const Color(0xFFFFB4AB) : const Color(0xFFB33535),
       );
   TextStyle text(
@@ -62,17 +64,17 @@ ThemeData lumaTheme(Brightness brightness) {
     brightness: brightness,
     colorScheme: scheme,
     fontFamily: 'Inter',
-    scaffoldBackgroundColor: dark ? AppColors.dark : AppColors.white,
+    scaffoldBackgroundColor: dark ? AppColors.dark : AppColors.paper,
     textTheme: TextTheme(
-      displaySmall: text(34, FontWeight.w600, height: 1.15, tracking: -1.5),
+      displaySmall: text(34, FontWeight.w600, height: 1.15, tracking: -1.0),
       headlineMedium: text(26, FontWeight.w600, height: 1.2, tracking: -.8),
       titleLarge: text(22, FontWeight.w600, tracking: -.5),
       titleMedium: text(16, FontWeight.w600, tracking: -.25),
       titleSmall: text(14, FontWeight.w600),
-      bodyLarge: text(15, FontWeight.w400, height: 1.45),
-      bodyMedium: text(13, FontWeight.w400, height: 1.5),
+      bodyLarge: text(16, FontWeight.w400, height: 1.45),
+      bodyMedium: text(14, FontWeight.w400, height: 1.5),
       bodySmall: text(
-        11,
+        12,
         FontWeight.w400,
         height: 1.45,
         color: scheme.onSurfaceVariant,
@@ -82,7 +84,7 @@ ThemeData lumaTheme(Brightness brightness) {
       labelSmall: text(10, FontWeight.w600, tracking: .7),
     ),
     appBarTheme: AppBarTheme(
-      backgroundColor: dark ? AppColors.dark : AppColors.white,
+      backgroundColor: dark ? AppColors.dark : AppColors.paper,
       foregroundColor: scheme.onSurface,
       centerTitle: false,
       elevation: 0,
@@ -91,12 +93,29 @@ ThemeData lumaTheme(Brightness brightness) {
       toolbarHeight: 64,
       titleTextStyle: text(22, FontWeight.w600, tracking: -.7),
     ),
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: scheme.surfaceContainerLowest,
+      indicatorColor: scheme.primaryContainer,
+      elevation: 0,
+      labelTextStyle: WidgetStatePropertyAll(text(12, FontWeight.w500)),
+    ),
+    navigationRailTheme: NavigationRailThemeData(
+      backgroundColor: scheme.surfaceContainerLowest,
+      indicatorColor: scheme.primaryContainer,
+      selectedIconTheme: IconThemeData(color: scheme.primary),
+    ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: scheme.primary,
+      foregroundColor: scheme.onPrimary,
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    ),
     cardTheme: CardThemeData(
       color: scheme.surface,
       elevation: 0,
       margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(14),
         side: BorderSide(color: scheme.outlineVariant),
       ),
     ),
@@ -210,9 +229,9 @@ IconData categoryIcon(String cat) => switch (cat) {
   _ => Icons.category_outlined,
 };
 Color categoryColor(String cat) => switch (cat) {
-  'food' => const Color(0xFF218B60),
-  'transport' => const Color(0xFF426C55),
-  'investment' => const Color(0xFF0B6845),
-  'shopping' => const Color(0xFF5C8468),
+  'food' => const Color(0xFFAD5238),
+  'transport' => const Color(0xFF4056A1),
+  'investment' => const Color(0xFF75679D),
+  'shopping' => const Color(0xFF276955),
   _ => AppColors.forest,
 };

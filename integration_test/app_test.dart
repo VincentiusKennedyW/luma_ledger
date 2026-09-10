@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' show DateFormat;
+import 'package:luma_ledger/core/statistics.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
@@ -239,12 +241,68 @@ void main() {
     await tester.tap(find.text('Insights').last);
     await tester.pumpAndSettle();
     await capture('luma-insights');
-    await tester.drag(
-      find.byType(Scrollable).hitTestable().first,
-      const Offset(0, -520),
-    );
+    await tester.tap(find.text('Yearly'));
     await tester.pumpAndSettle();
-    await capture('luma-trends');
+    expect(c.statisticsScale.value, StatisticsScale.year);
+    await capture('luma-yearly');
+    await tester.ensureVisible(find.text('Monthly breakdown'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Monthly breakdown'));
+    await tester.pumpAndSettle();
+    await capture('luma-monthly-breakdown');
+    final currentMonth = find.text(DateFormat('MMMM').format(DateTime.now()));
+    await tester.ensureVisible(currentMonth);
+    await tester.pumpAndSettle();
+    await tester.tap(currentMonth);
+    await tester.pumpAndSettle();
+    expect(c.statisticsScale.value, StatisticsScale.month);
+    await capture('luma-month-drilldown');
+    await tester.ensureVisible(find.text('Daily breakdown'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Daily breakdown'));
+    await tester.pumpAndSettle();
+    final firstDay = DateTime(DateTime.now().year, DateTime.now().month);
+    final dayRow = find.text(DateFormat('EEE, d MMM').format(firstDay));
+    await tester.ensureVisible(dayRow);
+    await tester.pumpAndSettle();
+    await tester.tap(dayRow);
+    await tester.pumpAndSettle();
+    expect(c.tab.value, 1);
+    expect(
+      c.filtered.every(
+        (e) => e.kind == EntryKind.expense && e.date == firstDay,
+      ),
+      true,
+    );
+    await capture('luma-day-expenses');
+    await tester.tap(find.text('Insights').last);
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Where your money went'));
+    await tester.pumpAndSettle();
+    await capture('luma-categories-report');
+    c.statisticsScale.value = StatisticsScale.year;
+    await c.changeTheme('dark');
+    await tester.pumpAndSettle();
+    tester
+        .state<ScrollableState>(
+          find
+              .ancestor(
+                of: find.text('Yearly'),
+                matching: find.byType(Scrollable),
+              )
+              .first,
+        )
+        .position
+        .jumpTo(0);
+    await tester.pumpAndSettle();
+    await capture('luma-yearly-dark');
+    tester.platformDispatcher.textScaleFactorTestValue = 1.3;
+    await tester.pumpAndSettle();
+    await capture('luma-large-text');
+    tester.platformDispatcher.clearTextScaleFactorTestValue();
+    await tester.pumpAndSettle();
+    await c.changeTheme('light');
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Plan').last);
     await tester.pumpAndSettle();
     await capture('luma-plan');

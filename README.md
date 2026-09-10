@@ -2,9 +2,19 @@
 
 A daily expense tracker for Android and iOS, built with Flutter, GetX and local SQLite. A macOS runner is included for development. There is no server, account, advertising, or analytics.
 
-## Version 1.1 design
+## Version 1.2: Pocket almanac
 
-Modern white and emerald UI with Inter typography, a compact balance summary, center Add navigation, quick entry actions, filter sheets, category grid, and a persistent Save button. See `docs/REDESIGN.md` and `design-system/luma-ledger/MASTER.md`.
+A phone-first calendar view of your money: warm surfaces, indigo period controls, clear financial rows, and a rust-colored spending chart. Android uses a Material navigation bar and Add action on phones, with a navigation rail on wider screens. The wallet-and-coin launcher icon is documented in `docs/BRANDING.md`.
+
+**Insights → Monthly / Yearly** shows every day or all twelve months, calendar-aligned comparisons, exact income/expense/investment/net totals, category shares, spending averages, and wallet and weekday breakdowns. Open **Monthly breakdown**, tap a month, then open **Daily breakdown** and tap a day to inspect its expenses. The statistics selection survives a visit to Activity. The menu beside the Monthly/Yearly control preserves all-time and custom-date reports.
+
+See `docs/STATISTICS.md` for definitions and `DESIGN.md` for the implemented design system.
+
+| Monthly report | Yearly report |
+| --- | --- |
+| <img src="docs/screenshots/android/luma-insights.png" width="320" alt="Monthly expenses in Luma Ledger"> | <img src="docs/screenshots/android/luma-yearly.png" width="320" alt="Yearly expenses in Luma Ledger"> |
+
+Native Android captures with fictional demo data. More captures and reproduction notes are in [docs/screenshots](docs/screenshots/README.md).
 
 ## Run
 
@@ -14,7 +24,7 @@ flutter pub get
 flutter run
 ```
 
-Built and verified using Flutter 3.35.6 / Dart 3.9.2. Commit `pubspec.lock` when putting this project under version control. Android and iOS native projects are included; this is not a web application.
+Built and verified using Flutter 3.35.6 / Dart 3.9.2. Dependencies are pinned in the committed `pubspec.lock`. Android and iOS native projects are included; this is not a web application.
 
 On first launch, create a ledger. IDR is the default. You can also explore an explicitly labeled demo with fictional data. The distributed app contains no personal transaction history.
 
@@ -24,7 +34,7 @@ On first launch, create a ledger. IDR is the default. You can also explore an ex
 - Record dates, categories, source/destination wallets and notes. Future dates are scheduled and excluded from actuals until their date.
 - Search descriptions and notes; filter by date range, type, category, wallet and review status.
 - View income, everyday spending, investment contributions and net cash flow for a month, year, all history or custom dates.
-- Compare six monthly cash-flow columns with exact values, category ranking, descriptions/merchants and weekday spending patterns.
+- Review daily spending for a month and monthly spending for a year, including exact totals, category ranking and shares, wallet spending, descriptions/merchants, weekday patterns, and calendar-aligned comparisons. All-time/custom reports retain the six-month cash-flow view.
 - Set a total or category monthly budget; see spending, remaining funds and overspend.
 - Schedule weekly/monthly/yearly recurring expenses, income and investments. Review and record due occurrences, or skip one. No background notifications or automatic posting are currently implemented.
 - Add wallets with opening balances. Transfers preserve the overall ledger balance.
@@ -62,7 +72,7 @@ Money is stored as integers at 100 internal units per currency unit; arithmetic 
 - **Cash retained:** net cash flow ÷ income; undefined when there is no income, possibly negative.
 - **Recorded balance:** wallet opening balances + income − expenses − investments, with transfers affecting the respective wallets and snapshots ignored.
 - **Daily average:** expenses ÷ elapsed calendar days in the selected period, including days without entries.
-- **Comparison:** preceding period of the same number of days; month lengths can therefore cross a calendar boundary. Incomplete periods are labeled in progress instead of showing a misleading full-period percentage.
+- **Monthly/yearly comparison:** preceding calendar month or year. An incomplete period compares matching calendar dates, capped at the last available day. Missing records and zero spending baselines are labeled. All-time/custom reports use the preceding range of the same number of days and suppress full-period percentages for incomplete ranges.
 - **Six-month chart:** ends at the selected period's end, capped at today. Zero-height months mean no recorded activity, not proof of zero real-world spending.
 
 Historical CSV data may not cover every transaction. A recorded balance is not a verified bank balance. Set an opening balance only for money held before the first recorded transaction; do not also add monthly carry-forwards.
@@ -89,6 +99,6 @@ flutter test integration_test/app_test.dart -d <ios-simulator-device-id>
 
 The optional `.private_tests` directory is local-only and excluded from distributed source.
 
-The integration suite uses an isolated test database, verifies real SQLite transactions and persistence, and exercises transaction entry. It generates fictional demo screen captures inside the test app's documents directory.
+The integration suite uses an isolated test database, verifies real SQLite transactions and persistence, and exercises transaction entry plus year → month → day drill-down. It generates fictional demo screen captures inside the test app's documents directory.
 
-Reference implementation guidance: [Flutter SQLite cookbook](https://docs.flutter.dev/cookbook/persistence/sqlite), [GetX](https://pub.dev/packages/get), [sqflite](https://pub.dev/packages/sqflite). UI decisions use the requested ui-ux-pro-max skill, adapted to native Flutter.
+Reference implementation guidance: [Flutter SQLite cookbook](https://docs.flutter.dev/cookbook/persistence/sqlite), [GetX](https://pub.dev/packages/get), [sqflite](https://pub.dev/packages/sqflite). Version 1.2 uses the Impeccable skill and the user-selected Pocket almanac direction, implemented directly in native Flutter.

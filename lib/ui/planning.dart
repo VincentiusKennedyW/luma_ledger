@@ -19,7 +19,7 @@ class PlanningPage extends StatelessWidget {
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primaryContainer,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(14),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,6 +97,7 @@ class PlanningPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           const ExpansionTile(
+            key: PageStorageKey('budget-help'),
             tilePadding: EdgeInsets.zero,
             title: Text('About budgets'),
             children: [

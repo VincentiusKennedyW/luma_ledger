@@ -114,7 +114,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const SectionTitle('About Luma'),
             const NoteBox(
-              'Luma 1.1 · On-device storage\n\nNo account, ads or analytics. Everything works offline. Each ledger has its own currency, wallets and history. Currency is fixed after creation to prevent accidental relabeling of money.\n\nThis app does not encrypt its database. Device security and OS backups protect your local files; exported backups are plain JSON. No bank connection or market-price tracking is included.',
+              'Luma 1.2 · On-device storage\n\nNo account, ads or analytics. Everything works offline. Each ledger has its own currency, wallets and history. Currency is fixed after creation to prevent accidental relabeling of money.\n\nThis app does not encrypt its database. Device security and OS backups protect your local files; exported backups are plain JSON. No bank connection or market-price tracking is included.',
             ),
             TextButton.icon(
               onPressed: () async {
@@ -369,7 +369,7 @@ class _WelcomePageState extends State<WelcomePage> {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

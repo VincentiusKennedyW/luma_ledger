@@ -1,3 +1,5 @@
+> Historical version 1.1 reference. The current version 1.2 design system is documented in [DESIGN.md](../../DESIGN.md).
+
 # Luma 1.1 — white & green
 
 ## Design direction

@@ -1,0 +1,561 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-10T00:40:41.025616Z",
+  "title": "Design System: Luma Ledger",
+  "extensions": {
+    "colorMeta": {
+      "indigo": {
+        "role": "primary",
+        "displayName": "Indigo",
+        "tonalRamp": [
+          "oklch(15% 0.1236 269.02)",
+          "oklch(26% 0.1236 269.02)",
+          "oklch(38% 0.1236 269.02)",
+          "oklch(49% 0.1236 269.02)",
+          "oklch(61% 0.1236 269.02)",
+          "oklch(72% 0.1236 269.02)",
+          "oklch(84% 0.1236 269.02)",
+          "oklch(95% 0.1236 269.02)"
+        ]
+      },
+      "indigo-wash": {
+        "role": "primary",
+        "displayName": "Indigo Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0194 273.23)",
+          "oklch(26% 0.0194 273.23)",
+          "oklch(38% 0.0194 273.23)",
+          "oklch(49% 0.0194 273.23)",
+          "oklch(61% 0.0194 273.23)",
+          "oklch(72% 0.0194 273.23)",
+          "oklch(84% 0.0194 273.23)",
+          "oklch(95% 0.0194 273.23)"
+        ]
+      },
+      "rust": {
+        "role": "secondary",
+        "displayName": "Rust",
+        "tonalRamp": [
+          "oklch(15% 0.1259 36.79)",
+          "oklch(26% 0.1259 36.79)",
+          "oklch(38% 0.1259 36.79)",
+          "oklch(49% 0.1259 36.79)",
+          "oklch(61% 0.1259 36.79)",
+          "oklch(72% 0.1259 36.79)",
+          "oklch(84% 0.1259 36.79)",
+          "oklch(95% 0.1259 36.79)"
+        ]
+      },
+      "income-green": {
+        "role": "tertiary",
+        "displayName": "Income Green",
+        "tonalRamp": [
+          "oklch(15% 0.0747 169.99)",
+          "oklch(26% 0.0747 169.99)",
+          "oklch(38% 0.0747 169.99)",
+          "oklch(49% 0.0747 169.99)",
+          "oklch(61% 0.0747 169.99)",
+          "oklch(72% 0.0747 169.99)",
+          "oklch(84% 0.0747 169.99)",
+          "oklch(95% 0.0747 169.99)"
+        ]
+      },
+      "category-lavender": {
+        "role": "secondary",
+        "displayName": "Category Lavender",
+        "tonalRamp": [
+          "oklch(15% 0.0838 295.42)",
+          "oklch(26% 0.0838 295.42)",
+          "oklch(38% 0.0838 295.42)",
+          "oklch(49% 0.0838 295.42)",
+          "oklch(61% 0.0838 295.42)",
+          "oklch(72% 0.0838 295.42)",
+          "oklch(84% 0.0838 295.42)",
+          "oklch(95% 0.0838 295.42)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0070 88.64)",
+          "oklch(26% 0.0070 88.64)",
+          "oklch(38% 0.0070 88.64)",
+          "oklch(49% 0.0070 88.64)",
+          "oklch(61% 0.0070 88.64)",
+          "oklch(72% 0.0070 88.64)",
+          "oklch(84% 0.0070 88.64)",
+          "oklch(95% 0.0070 88.64)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0041 91.45)",
+          "oklch(26% 0.0041 91.45)",
+          "oklch(38% 0.0041 91.45)",
+          "oklch(49% 0.0041 91.45)",
+          "oklch(61% 0.0041 91.45)",
+          "oklch(72% 0.0041 91.45)",
+          "oklch(84% 0.0041 91.45)",
+          "oklch(95% 0.0041 91.45)"
+        ]
+      },
+      "soft-surface": {
+        "role": "neutral",
+        "displayName": "Soft Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0067 97.35)",
+          "oklch(26% 0.0067 97.35)",
+          "oklch(38% 0.0067 97.35)",
+          "oklch(49% 0.0067 97.35)",
+          "oklch(61% 0.0067 97.35)",
+          "oklch(72% 0.0067 97.35)",
+          "oklch(84% 0.0067 97.35)",
+          "oklch(95% 0.0067 97.35)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0286 270.20)",
+          "oklch(26% 0.0286 270.20)",
+          "oklch(38% 0.0286 270.20)",
+          "oklch(49% 0.0286 270.20)",
+          "oklch(61% 0.0286 270.20)",
+          "oklch(72% 0.0286 270.20)",
+          "oklch(84% 0.0286 270.20)",
+          "oklch(95% 0.0286 270.20)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0209 275.32)",
+          "oklch(26% 0.0209 275.32)",
+          "oklch(38% 0.0209 275.32)",
+          "oklch(49% 0.0209 275.32)",
+          "oklch(61% 0.0209 275.32)",
+          "oklch(72% 0.0209 275.32)",
+          "oklch(84% 0.0209 275.32)",
+          "oklch(95% 0.0209 275.32)"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0017 145.56)",
+          "oklch(26% 0.0017 145.56)",
+          "oklch(38% 0.0017 145.56)",
+          "oklch(49% 0.0017 145.56)",
+          "oklch(61% 0.0017 145.56)",
+          "oklch(72% 0.0017 145.56)",
+          "oklch(84% 0.0017 145.56)",
+          "oklch(95% 0.0017 145.56)"
+        ]
+      },
+      "outline": {
+        "role": "neutral",
+        "displayName": "Outline",
+        "tonalRamp": [
+          "oklch(15% 0.0203 272.14)",
+          "oklch(26% 0.0203 272.14)",
+          "oklch(38% 0.0203 272.14)",
+          "oklch(49% 0.0203 272.14)",
+          "oklch(61% 0.0203 272.14)",
+          "oklch(72% 0.0203 272.14)",
+          "oklch(84% 0.0203 272.14)",
+          "oklch(95% 0.0203 272.14)"
+        ]
+      },
+      "error": {
+        "role": "secondary",
+        "displayName": "Error",
+        "tonalRamp": [
+          "oklch(15% 0.1627 24.86)",
+          "oklch(26% 0.1627 24.86)",
+          "oklch(38% 0.1627 24.86)",
+          "oklch(49% 0.1627 24.86)",
+          "oklch(61% 0.1627 24.86)",
+          "oklch(72% 0.1627 24.86)",
+          "oklch(84% 0.1627 24.86)",
+          "oklch(95% 0.1627 24.86)"
+        ]
+      },
+      "dark-indigo": {
+        "role": "primary",
+        "displayName": "Dark Indigo",
+        "tonalRamp": [
+          "oklch(15% 0.0836 272.51)",
+          "oklch(26% 0.0836 272.51)",
+          "oklch(38% 0.0836 272.51)",
+          "oklch(49% 0.0836 272.51)",
+          "oklch(61% 0.0836 272.51)",
+          "oklch(72% 0.0836 272.51)",
+          "oklch(84% 0.0836 272.51)",
+          "oklch(95% 0.0836 272.51)"
+        ]
+      },
+      "dark-indigo-wash": {
+        "role": "primary",
+        "displayName": "Dark Indigo Wash",
+        "tonalRamp": [
+          "oklch(15% 0.0758 270.54)",
+          "oklch(26% 0.0758 270.54)",
+          "oklch(38% 0.0758 270.54)",
+          "oklch(49% 0.0758 270.54)",
+          "oklch(61% 0.0758 270.54)",
+          "oklch(72% 0.0758 270.54)",
+          "oklch(84% 0.0758 270.54)",
+          "oklch(95% 0.0758 270.54)"
+        ]
+      },
+      "dark-rust": {
+        "role": "secondary",
+        "displayName": "Dark Rust",
+        "tonalRamp": [
+          "oklch(15% 0.0926 37.99)",
+          "oklch(26% 0.0926 37.99)",
+          "oklch(38% 0.0926 37.99)",
+          "oklch(49% 0.0926 37.99)",
+          "oklch(61% 0.0926 37.99)",
+          "oklch(72% 0.0926 37.99)",
+          "oklch(84% 0.0926 37.99)",
+          "oklch(95% 0.0926 37.99)"
+        ]
+      },
+      "dark-income-green": {
+        "role": "tertiary",
+        "displayName": "Dark Income Green",
+        "tonalRamp": [
+          "oklch(15% 0.0829 170.05)",
+          "oklch(26% 0.0829 170.05)",
+          "oklch(38% 0.0829 170.05)",
+          "oklch(49% 0.0829 170.05)",
+          "oklch(61% 0.0829 170.05)",
+          "oklch(72% 0.0829 170.05)",
+          "oklch(84% 0.0829 170.05)",
+          "oklch(95% 0.0829 170.05)"
+        ]
+      },
+      "dark-paper": {
+        "role": "neutral",
+        "displayName": "Dark Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0200 271.73)",
+          "oklch(26% 0.0200 271.73)",
+          "oklch(38% 0.0200 271.73)",
+          "oklch(49% 0.0200 271.73)",
+          "oklch(61% 0.0200 271.73)",
+          "oklch(72% 0.0200 271.73)",
+          "oklch(84% 0.0200 271.73)",
+          "oklch(95% 0.0200 271.73)"
+        ]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Dark Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0267 272.14)",
+          "oklch(26% 0.0267 272.14)",
+          "oklch(38% 0.0267 272.14)",
+          "oklch(49% 0.0267 272.14)",
+          "oklch(61% 0.0267 272.14)",
+          "oklch(72% 0.0267 272.14)",
+          "oklch(84% 0.0267 272.14)",
+          "oklch(95% 0.0267 272.14)"
+        ]
+      },
+      "dark-soft-surface": {
+        "role": "neutral",
+        "displayName": "Dark Soft Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0265 269.44)",
+          "oklch(26% 0.0265 269.44)",
+          "oklch(38% 0.0265 269.44)",
+          "oklch(49% 0.0265 269.44)",
+          "oklch(61% 0.0265 269.44)",
+          "oklch(72% 0.0265 269.44)",
+          "oklch(84% 0.0265 269.44)",
+          "oklch(95% 0.0265 269.44)"
+        ]
+      },
+      "dark-ink": {
+        "role": "neutral",
+        "displayName": "Dark Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0080 98.88)",
+          "oklch(26% 0.0080 98.88)",
+          "oklch(38% 0.0080 98.88)",
+          "oklch(49% 0.0080 98.88)",
+          "oklch(61% 0.0080 98.88)",
+          "oklch(72% 0.0080 98.88)",
+          "oklch(84% 0.0080 98.88)",
+          "oklch(95% 0.0080 98.88)"
+        ]
+      },
+      "dark-muted": {
+        "role": "neutral",
+        "displayName": "Dark Muted",
+        "tonalRamp": [
+          "oklch(15% 0.0205 270.16)",
+          "oklch(26% 0.0205 270.16)",
+          "oklch(38% 0.0205 270.16)",
+          "oklch(49% 0.0205 270.16)",
+          "oklch(61% 0.0205 270.16)",
+          "oklch(72% 0.0205 270.16)",
+          "oklch(84% 0.0205 270.16)",
+          "oklch(95% 0.0205 270.16)"
+        ]
+      },
+      "dark-rule": {
+        "role": "neutral",
+        "displayName": "Dark Rule",
+        "tonalRamp": [
+          "oklch(15% 0.0281 268.96)",
+          "oklch(26% 0.0281 268.96)",
+          "oklch(38% 0.0281 268.96)",
+          "oklch(49% 0.0281 268.96)",
+          "oklch(61% 0.0281 268.96)",
+          "oklch(72% 0.0281 268.96)",
+          "oklch(84% 0.0281 268.96)",
+          "oklch(95% 0.0281 268.96)"
+        ]
+      },
+      "dark-error": {
+        "role": "secondary",
+        "displayName": "Dark Error",
+        "tonalRamp": [
+          "oklch(15% 0.0891 26.76)",
+          "oklch(26% 0.0891 26.76)",
+          "oklch(38% 0.0891 26.76)",
+          "oklch(49% 0.0891 26.76)",
+          "oklch(61% 0.0891 26.76)",
+          "oklch(72% 0.0891 26.76)",
+          "oklch(84% 0.0891 26.76)",
+          "oklch(95% 0.0891 26.76)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Dominant financial amount and amount entry."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Intermediate large totals."
+      },
+      "title-large": {
+        "displayName": "Title Large",
+        "purpose": "Native Inter hierarchy role; see DESIGN.md Typography."
+      },
+      "title-medium": {
+        "displayName": "Title Medium",
+        "purpose": "Native Inter hierarchy role; see DESIGN.md Typography."
+      },
+      "title-small": {
+        "displayName": "Title Small",
+        "purpose": "Native Inter hierarchy role; see DESIGN.md Typography."
+      },
+      "body-large": {
+        "displayName": "Body Large",
+        "purpose": "Native Inter hierarchy role; see DESIGN.md Typography."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Prose and ordinary financial row labels."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "Muted supporting explanations and metadata."
+      },
+      "label-large": {
+        "displayName": "Label Large",
+        "purpose": "Native Inter hierarchy role; see DESIGN.md Typography."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navigation and compact choice labels."
+      },
+      "label-small": {
+        "displayName": "Label Small",
+        "purpose": "Native Inter hierarchy role; see DESIGN.md Typography."
+      }
+    },
+    "shadows": [
+      {
+        "name": "authored-flat",
+        "value": "none",
+        "purpose": "App bars, cards, bottom navigation and FAB explicitly configure zero elevation. Dialog/sheet elevation and state layers inherit Material."
+      }
+    ],
+    "motion": [
+      {
+        "name": "period-label-fade",
+        "value": "180ms",
+        "purpose": "AnimatedSwitcher default fade on period label only; totals update immediately."
+      },
+      {
+        "name": "period-label-incoming-curve",
+        "value": "Curves.easeOutCubic",
+        "purpose": "Flutter incoming switch curve; outgoing behavior inherits AnimatedSwitcher defaults."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0ms",
+        "purpose": "Disabled system animations remove the period fade and select no-transition routing."
+      },
+      {
+        "name": "route-transition",
+        "value": "Transition.native",
+        "purpose": "Normal navigation uses native route transitions."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "navigation-rail",
+        "value": "720px"
+      },
+      {
+        "name": "financial-row-stack",
+        "value": "290px"
+      }
+    ],
+    "nativeConventions": {
+      "implementation": "Flutter Material 3; Android first, also iPhone.",
+      "units": "Frontmatter px and preview CSS pixels translate nominal Flutter logical pixels 1:1; native text sizes are still scaled by the system.",
+      "inheritedDefaults": "Omitted text heights/tracking, unoverridden ColorScheme roles, control state layers, button padding, navigation dimensions, dialog and sheet elevation remain Flutter/Material defaults.",
+      "typography": "Inter is bundled in the native app. Preview snippets request Inter with sans-serif fallback; the preview host must provide Inter for font fidelity. No external font dependency is loaded by snippets.",
+      "previewStates": "CSS brightness hover/press, focus outlines, disabled opacity, some control padding/radii and browser label placement are accessible interactive preview translations, not extracted native state values. Static panels have no states.",
+      "tonalRamps": "Eight-step OKLCH strips are synthesized at fixed source hue/chroma; they are panel explorations, not production tokens. Gamut mapping is browser-owned.",
+      "reflow": "System scale >1.4 triggers the documented row/control adaptations; supporting stat grids use >1.5. Financial rows stack below 290 logical pixels; rail starts at >=720 viewport logical pixels.",
+      "safeAreas": "Keep scaffold and entry action safe areas plus native back handling.",
+      "evidence": [
+        "lib/ui/theme.dart",
+        "lib/main.dart",
+        "lib/ui/components.dart",
+        "lib/ui/insights.dart",
+        "lib/ui/entry_form.dart",
+        "lib/ui/planning.dart",
+        "docs/screenshots/README.md",
+        ".impeccable/review/finish-review.md"
+      ],
+      "reviewScope": "Finish review: ship, 13 native captures and sampled source, no material fixes. This documentation separately sampled the Android monthly and iPhone dark yearly images; it does not claim new full-device verification.",
+      "fontFeatures": "All authored Flutter theme text enables FontFeature.tabularFigures(); HTML/CSS previews translate this as font-variant-numeric: tabular-nums."
+    }
+  },
+  "components": [
+    {
+      "name": "Filled action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary save action. Native minimum size and authored radius are preserved; horizontal padding is illustrative. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<button class=\"ds-primary\">Save transaction</button>",
+      "css": ".ds-primary{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;background:#4056A1;color:#FFFEFB;min-width:48px;min-height:52px;padding:12px 24px;border:0;border-radius:13px;font-size:14px;font-weight:600;cursor:pointer}.ds-primary:hover{filter:brightness(.97)}.ds-primary:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-primary:active{filter:brightness(.92)}.ds-primary:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Outlined action",
+      "kind": "button",
+      "refersTo": "button-outlined",
+      "description": "Secondary action with fine outline; browser horizontal padding is illustrative. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<button class=\"ds-outlined\">Create a budget</button>",
+      "css": ".ds-outlined{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;background:transparent;color:#4056A1;min-width:48px;min-height:48px;padding:12px 24px;border:1px solid #DCDDDC;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer}.ds-outlined:hover{filter:brightness(.97)}.ds-outlined:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-outlined:active{filter:brightness(.92)}.ds-outlined:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Text action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Compact section action; browser padding and rounded native default are illustrative. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<button class=\"ds-text\">Add budget</button>",
+      "css": ".ds-text{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;background:transparent;color:#4056A1;min-width:48px;min-height:48px;padding:12px;border:0;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer}.ds-text:hover{filter:brightness(.97)}.ds-text:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-text:active{filter:brightness(.92)}.ds-text:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Text field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labeled field with the authored focus border. Browser label placement illustrates the native floating-label relationship. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<label class=\"ds-field\">Description<input class=\"ds-input\" placeholder=\"e.g. Lunch, fuel, monthly salary\"></label>",
+      "css": ".ds-field{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;display:block;color:#616471;font-size:13px;font-weight:400}.ds-input{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;display:block;width:calc(100% - 34px);margin-top:6px;padding:15px 16px;border:1px solid #DCDDDC;border-radius:12px;background:#F0EFEA;color:#242938;font-size:14px}.ds-input::placeholder{color:#616471}.ds-input:hover{border-color:#7B7F8C}.ds-input:focus-visible{outline:none;border:1.5px solid #4056A1}.ds-input:disabled{opacity:.45}"
+    },
+    {
+      "name": "Bottom navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Four destinations on paper with a selected tonal indicator. Browser geometry approximates Material navigation defaults. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Main\"><button class=\"ds-dest\"><span class=\"ds-indicator\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M3 3h7v18H3z M14 3h7v8h-7z M14 15h7v6h-7z\"/></svg></span>Overview</button><button class=\"ds-dest\"><span class=\"ds-indicator\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M6 3h12v18l-3-2-3 2-3-2-3 2z M9 7h6 M9 11h6 M9 15h6\"/></svg></span>Activity</button><button class=\"ds-dest\" aria-current=\"page\"><span class=\"ds-indicator\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M4 5h16v16H4z M4 10h16 M8 2v6 M16 2v6 M8 14h2 M14 14h2 M8 18h2\"/></svg></span>Insights</button><button class=\"ds-dest\"><span class=\"ds-indicator\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M12 3v9h9 M21 14a9 9 0 1 1-11-11\"/></svg></span>Plan</button></nav>",
+      "css": ".ds-nav{display:flex;gap:4px;padding:12px 4px;background:#F7F5F0}.ds-dest{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;flex:1;min-width:48px;min-height:48px;padding:0;border:0;background:transparent;color:#242938;font-size:12px;font-weight:500;cursor:pointer}.ds-indicator{display:flex;align-items:center;justify-content:center;width:56px;min-height:32px;margin:0 auto 4px;border-radius:20px;color:#616471}.ds-dest[aria-current=page] .ds-indicator{background:#E6EAF8;color:#242938}.ds-dest:hover{filter:brightness(.97)}.ds-dest:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-dest:active{filter:brightness(.92)}.ds-dest:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Selected chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Theme-level compact selection, before the entry-form padding override. Label inset and total height illustrate native touch behavior. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">Expense</button>",
+      "css": ".ds-chip{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;min-height:48px;padding:8px 16px;border:0;border-radius:10px;background:#E6EAF8;color:#242938;font-size:12px;font-weight:500;cursor:pointer}.ds-chip:hover{filter:brightness(.97)}.ds-chip:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-chip:active{filter:brightness(.92)}.ds-chip:disabled{opacity:.45;cursor:default}"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat supporting container; static content needs no interactive state. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<section class=\"ds-panel\"><h3 class=\"ds-panel-title\">Your wallets</h3><p class=\"ds-panel-copy\">Opening balances and recorded transactions stay together.</p></section>",
+      "css": ".ds-panel{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;padding:20px;border:1px solid #DCDDDC;border-radius:14px;background:#FFFEFB;color:#242938}.ds-panel-title{margin:0 0 8px;font-size:16px;font-weight:600;letter-spacing:-.25px}.ds-panel-copy{margin:0;font-size:14px;font-weight:400;line-height:1.5}"
+    },
+    {
+      "name": "Calendar band",
+      "kind": "custom",
+      "refersTo": "calendar-band",
+      "description": "Period navigation with disabled future navigation. The static browser label demonstrates the surface; 180ms native transition is metadata, not a fake click workflow. Browser preview translation; native Material state layers remain framework-owned.",
+      "html": "<div class=\"ds-band\"><button class=\"ds-step\" aria-label=\"Previous month\"><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M15 6l-6 6 6 6\"/></svg></button><button class=\"ds-period\">September 2026</button><button class=\"ds-step\" aria-label=\"Next month\" disabled><svg viewBox=\"0 0 24 24\" width=\"21\" height=\"21\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M9 6l6 6-6 6\"/></svg></button></div>",
+      "css": ".ds-band{display:flex;align-items:center;padding:8px 4px;border-radius:14px;background:#E6EAF8}.ds-step{display:flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;border:0;border-radius:24px;background:transparent;color:#616471;cursor:pointer}.ds-period{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;flex:1;min-height:48px;border:0;border-radius:20px;background:transparent;color:#4056A1;text-align:center;font-size:16px;font-weight:600;letter-spacing:-.25px;cursor:pointer}.ds-step:hover{filter:brightness(.97)}.ds-step:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-step:active{filter:brightness(.92)}.ds-step:disabled{opacity:.45;cursor:default}.ds-period:hover{filter:brightness(.97)}.ds-period:focus-visible{outline:2px solid #4056A1;outline-offset:3px}.ds-period:active{filter:brightness(.92)}.ds-period:disabled{opacity:.45;cursor:default}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Pocket almanac",
+    "overview": "Luma Ledger reads money as a calendar: years open into months, and months into dated entries. Warm paper, deep ink, indigo selection bands and a rust spending trace make an everyday ledger feel calm and legible. Open financial rows carry the information; restrained containers gather forms, budgets and supporting tasks.\n\nThis is an Android-first Flutter interface with Material 3 controls, also supporting iPhone. The same hierarchy survives dark appearance, larger system text and expanded screens. The wallet-and-coin app mark remains the identity asset; no simulated paper texture or additional illustration is part of this implemented world.",
+    "keyCharacteristics": [
+      "Calendar bands orient the reader before financial detail.",
+      "One Inter family with tabular amounts and restrained weight changes.",
+      "Open rows, fine rules and flat tonal surfaces.",
+      "Semantic color and plain language preserve financial distinctions.",
+      "System text scaling, native controls and reduced motion remain part of the design."
+    ],
+    "rules": [
+      {
+        "name": "Calendar Ink",
+        "body": "Use indigo for selection and primary action, rust for spending traces, and green for income in report rows. Keep the text label with the color.",
+        "section": "colors"
+      },
+      {
+        "name": "Exact Amount",
+        "body": "Use tabular Inter figures for money and preserve the full formatted amount; allow layout to reflow before sacrificing financial meaning.",
+        "section": "typography"
+      },
+      {
+        "name": "Flat Paper",
+        "body": "Use tonal surfaces and fine rules for authored separation. App bars, cards, bottom navigation and the Add action have zero configured elevation.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep calendar context visible when opening monthly or daily detail.",
+      "Do use the theme’s semantic colors so dark appearance retains the same roles.",
+      "Do keep exact amounts, missing records, partial periods and upcoming dates explicit.",
+      "Do allow system text scaling and reflow rows and controls at their implemented thresholds.",
+      "Do preserve native Material interaction feedback, safe areas, route transitions and reduced-motion handling.",
+      "Do retain the wallet-and-coin mark; use real Material icons for application controls."
+    ],
+    "donts": [
+      "Don't turn every report value into a tinted metric card; keep the implemented open-row hierarchy.",
+      "Don't introduce paper grain, bevels, decorative gradients or hard offset shadows into the flat material language.",
+      "Don't animate money totals with counting or rolling digits; the authored transition belongs to the period label.",
+      "Don't encode financial meaning only through color or confuse invested contributions with investment returns.",
+      "Don't treat synthesized sidecar ramps, web focus rings or browser line-height defaults as native theme tokens."
+    ]
+  }
+}

@@ -139,21 +139,41 @@ class AppShell extends StatelessWidget {
   const AppShell({super.key});
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<LedgerController>();
+    final c = Get.find<LedgerController>(), t = Theme.of(context);
+    final large = MediaQuery.textScalerOf(context).scale(1) > 1.4;
+    final expanded = MediaQuery.sizeOf(context).width >= 720;
+    const icons = [
+      Icons.space_dashboard_outlined,
+      Icons.receipt_long_outlined,
+      Icons.calendar_month_outlined,
+      Icons.pie_chart_outline_rounded,
+    ];
+    const labels = ['Overview', 'Activity', 'Insights', 'Plan'];
+    Widget addButton() => FloatingActionButton(
+      tooltip: 'Add transaction',
+      onPressed: () => Get.toNamed('/entry'),
+      child: const Icon(Icons.add_rounded, size: 28),
+    );
     return Obx(() {
       if (c.ledger == null) return const WelcomePage();
-      final index = c.tab.value, t = Theme.of(context), scheme = t.colorScheme;
-      final large = MediaQuery.textScalerOf(context).scale(1) > 1.4;
+      final index = c.tab.value;
+      final pages = IndexedStack(
+        index: index,
+        children: const [
+          OverviewPage(),
+          TransactionsPage(),
+          InsightsPage(),
+          PlanningPage(),
+        ],
+      );
       return Scaffold(
         appBar: AppBar(
-          toolbarHeight: large ? 100 : 72,
+          toolbarHeight: large ? 144 : 76,
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                ['Overview', 'Transactions', 'Insights', 'Your plan'][index],
-              ),
-              const SizedBox(height: 3),
+              Text(labels[index], maxLines: 1, overflow: TextOverflow.ellipsis),
+              const SizedBox(height: 4),
               Text(
                 c.ledger!.name,
                 maxLines: 1,
@@ -171,7 +191,7 @@ class AppShell extends StatelessWidget {
               ),
             Padding(
               padding: const EdgeInsets.only(right: 12),
-              child: IconButton.filledTonal(
+              child: IconButton(
                 tooltip: 'Settings',
                 onPressed: () => Get.toNamed('/settings'),
                 icon: const Icon(Icons.tune_rounded),
@@ -182,150 +202,64 @@ class AppShell extends StatelessWidget {
         body: SafeArea(
           top: false,
           bottom: false,
-          child: IndexedStack(
-            index: index,
-            children: const [
-              OverviewPage(),
-              TransactionsPage(),
-              InsightsPage(),
-              PlanningPage(),
-            ],
-          ),
-        ),
-        bottomNavigationBar: DecoratedBox(
-          decoration: BoxDecoration(
-            color: scheme.surface,
-            border: Border(top: BorderSide(color: scheme.outlineVariant)),
-          ),
-          child: SafeArea(
-            top: false,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 9, 10, 7),
-              child: Row(
-                children: [
-                  _destination(
-                    context,
-                    c,
-                    0,
-                    Icons.grid_view_rounded,
-                    'Overview',
-                    large,
-                  ),
-                  _destination(
-                    context,
-                    c,
-                    1,
-                    Icons.receipt_long_outlined,
-                    'Activity',
-                    large,
-                  ),
-                  Expanded(
-                    child: Center(
-                      heightFactor: 1,
-                      child: IconButton.filled(
-                        style: IconButton.styleFrom(
-                          minimumSize: const Size(52, 52),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18),
+          child: expanded
+              ? Row(
+                  children: [
+                    LayoutBuilder(
+                      builder: (context, bounds) => SingleChildScrollView(
+                        child: SizedBox(
+                          height: bounds.maxHeight < 420
+                              ? 420
+                              : bounds.maxHeight,
+                          child: NavigationRail(
+                            selectedIndex: index,
+                            onDestinationSelected: (i) => c.tab.value = i,
+                            labelType: large
+                                ? NavigationRailLabelType.none
+                                : NavigationRailLabelType.all,
+                            leading: Padding(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              child: addButton(),
+                            ),
+                            destinations: List.generate(
+                              4,
+                              (i) => NavigationRailDestination(
+                                icon: Icon(icons[i]),
+                                label: Text(labels[i]),
+                              ),
+                            ),
                           ),
                         ),
-                        tooltip: 'Add transaction',
-                        onPressed: () => Get.toNamed('/entry'),
-                        icon: const Icon(Icons.add_rounded, size: 28),
                       ),
                     ),
-                  ),
-                  _destination(
-                    context,
-                    c,
-                    2,
-                    Icons.bar_chart_rounded,
-                    'Insights',
-                    large,
-                  ),
-                  _destination(
-                    context,
-                    c,
-                    3,
-                    Icons.pie_chart_outline_rounded,
-                    'Plan',
-                    large,
-                  ),
-                ],
-              ),
-            ),
-          ),
+                    VerticalDivider(
+                      width: 1,
+                      color: t.colorScheme.outlineVariant,
+                    ),
+                    Expanded(child: pages),
+                  ],
+                )
+              : pages,
         ),
+        floatingActionButton: expanded ? null : addButton(),
+        bottomNavigationBar: expanded
+            ? null
+            : NavigationBar(
+                selectedIndex: index,
+                onDestinationSelected: (i) => c.tab.value = i,
+                labelBehavior: large
+                    ? NavigationDestinationLabelBehavior.alwaysHide
+                    : NavigationDestinationLabelBehavior.alwaysShow,
+                destinations: List.generate(
+                  4,
+                  (i) => NavigationDestination(
+                    icon: Icon(icons[i]),
+                    label: labels[i],
+                    tooltip: labels[i],
+                  ),
+                ),
+              ),
       );
     });
-  }
-
-  Widget _destination(
-    BuildContext context,
-    LedgerController c,
-    int index,
-    IconData icon,
-    String label,
-    bool large,
-  ) {
-    final selected = c.tab.value == index,
-        scheme = Theme.of(context).colorScheme;
-    return Expanded(
-      child: Semantics(
-        selected: selected,
-        button: true,
-        label: label,
-        child: Tooltip(
-          message: label,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () => c.tab.value = index,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 52),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 13,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: selected
-                          ? scheme.primaryContainer
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Icon(
-                      icon,
-                      size: 22,
-                      color: selected
-                          ? scheme.primary
-                          : scheme.onSurfaceVariant,
-                    ),
-                  ),
-                  if (!large)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 3),
-                      child: Text(
-                        label,
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: selected
-                              ? FontWeight.w600
-                              : FontWeight.w400,
-                          color: selected
-                              ? scheme.primary
-                              : scheme.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

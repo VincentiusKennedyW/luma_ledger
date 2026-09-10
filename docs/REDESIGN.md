@@ -1,4 +1,13 @@
-# Version 1.1 UI redesign
+# Redesign history
+
+## Version 1.2: Pocket almanac
+
+The user selected the leftmost “The Roll” direction: warm paper, indigo calendar controls, rust expense charts and open financial rows. Insights supports calendar monthly/yearly reports and year → month → day expense inspection, with explicit partial periods and missing history. Phone navigation uses Material destinations and a reachable Add action; expanded layouts use a navigation rail. Offline storage and existing entry, budget, import/export and recurring workflows remain intact. The new wallet-and-coin icon replaces the ascending bars.
+
+See `../DESIGN.md` for the current implementation rules, `STATISTICS.md` for report definitions, and `VERIFICATION.md` for test evidence. Version 1.2.0 uses build number 3. No database migration is required.
+
+## Version 1.1 (historical)
+
 
 Requested style: modern white and green, using the ui-styling skill while retaining Flutter, GetX, and local SQLite.
 

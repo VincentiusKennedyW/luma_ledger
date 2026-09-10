@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import '../controllers/ledger_controller.dart';
 import '../core/models.dart';
 import 'components.dart';
-import 'theme.dart';
+export 'insights.dart' show InsightsPage;
 
 void showCategory(LedgerController c, String cat) {
   c.search.value = '';
@@ -21,9 +21,7 @@ class OverviewPage extends StatelessWidget {
   const OverviewPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final c = Get.find<LedgerController>(),
-        t = Theme.of(context),
-        scheme = t.colorScheme;
+    final c = Get.find<LedgerController>(), t = Theme.of(context);
     return Obx(() {
       final report = c.report,
           recent = c.entries
@@ -34,69 +32,26 @@ class OverviewPage extends StatelessWidget {
       return PageBody(
         storageKey: 'overview',
         children: [
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: scheme.primaryContainer,
-              borderRadius: BorderRadius.circular(22),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        'Recorded balance',
-                        style: t.textTheme.bodyMedium?.copyWith(
-                          color: scheme.onPrimaryContainer,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      tooltip: 'View wallets',
-                      onPressed: () => Get.toNamed('/wallets'),
-                      icon: Icon(
-                        Icons.north_east_rounded,
-                        color: scheme.primary,
-                        size: 20,
-                      ),
-                    ),
-                  ],
-                ),
-                Text(
-                  c.fmt(c.balance),
-                  style: t.textTheme.displaySmall?.copyWith(
-                    color: scheme.onPrimaryContainer,
-                  ),
-                ),
-                const SizedBox(height: 14),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.account_balance_wallet_outlined,
-                      size: 15,
-                      color: scheme.primary,
-                    ),
-                    const SizedBox(width: 7),
-                    Expanded(
-                      child: Text(
-                        '${c.wallets.length} ${c.wallets.length == 1 ? 'wallet' : 'wallets'} · as of today',
-                        style: t.textTheme.bodySmall?.copyWith(
-                          color: scheme.onPrimaryContainer,
-                        ),
-                      ),
-                    ),
-                    Icon(
-                      Icons.lock_outline_rounded,
-                      size: 14,
-                      color: scheme.primary,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text('Recorded balance', style: t.textTheme.titleMedium),
+              ),
+              IconButton(
+                tooltip: 'View wallets',
+                onPressed: () => Get.toNamed('/wallets'),
+                icon: const Icon(Icons.north_east_rounded),
+              ),
+            ],
           ),
+          Text(c.fmt(c.balance), style: t.textTheme.displaySmall),
+          const SizedBox(height: 8),
+          Text(
+            '${c.wallets.length} ${c.wallets.length == 1 ? 'wallet' : 'wallets'} · as of today',
+            style: t.textTheme.bodySmall,
+          ),
+          const SizedBox(height: 24),
+          const Divider(),
           const SizedBox(height: 14),
           LayoutBuilder(
             builder: (context, size) => Wrap(
@@ -109,7 +64,9 @@ class OverviewPage extends StatelessWidget {
                   (EntryKind.transfer, Icons.swap_horiz_rounded, 'Transfer'),
                 ])
                   SizedBox(
-                    width: MediaQuery.textScalerOf(context).scale(1) > 1.4
+                    width:
+                        MediaQuery.textScalerOf(context).scale(1) > 1.2 ||
+                            size.maxWidth < 330
                         ? size.maxWidth
                         : (size.maxWidth - 20) / 3,
                     child: OutlinedButton.icon(
@@ -201,7 +158,10 @@ class OverviewPage extends StatelessWidget {
             SectionTitle(
               'Spending breakdown',
               action: 'Full report',
-              onTap: () => c.tab.value = 2,
+              onTap: () {
+                c.statisticsAnchor.value = c.period.value.start;
+                c.tab.value = 2;
+              },
             ),
             Panel(
               child: Column(
@@ -245,11 +205,11 @@ class SpendingStrip extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.only(right: 2),
                       color: [
-                        const Color(0xFF087A50),
-                        const Color(0xFF4CAF7F),
-                        const Color(0xFF83CAA1),
-                        const Color(0xFFB0DDC2),
-                        const Color(0xFFD7EDE0),
+                        Theme.of(context).colorScheme.secondary,
+                        Theme.of(context).colorScheme.primary,
+                        Theme.of(context).colorScheme.tertiary,
+                        const Color(0xFF998ABD),
+                        const Color(0xFFBDA576),
                       ][v.$1 % 5],
                     ),
                   ),
@@ -397,7 +357,7 @@ class TransactionsPage extends StatelessWidget {
               ),
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 28)),
+          const SliverToBoxAdapter(child: SizedBox(height: 104)),
         ],
       );
     });
@@ -509,8 +469,8 @@ Future<void> transactionFilters(BuildContext context) async {
   );
 }
 
-class InsightsPage extends StatelessWidget {
-  const InsightsPage({super.key});
+class RangeInsightsPage extends StatelessWidget {
+  const RangeInsightsPage({super.key});
   @override
   Widget build(BuildContext context) {
     final c = Get.find<LedgerController>(), t = Theme.of(context);
@@ -616,6 +576,7 @@ class InsightsPage extends StatelessWidget {
           ]),
           const SizedBox(height: 16),
           const ExpansionTile(
+            key: PageStorageKey('range-help'),
             tilePadding: EdgeInsets.zero,
             title: Text('How totals are calculated'),
             children: [
@@ -641,12 +602,8 @@ class CashFlowChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = Get.find<LedgerController>();
-    final incomeColor = Theme.of(context).brightness == Brightness.dark
-        ? AppColors.mint
-        : AppColors.forest;
-    final outflowColor = Theme.of(context).brightness == Brightness.dark
-        ? const Color(0xFF557D65)
-        : const Color(0xFFBDE7CE);
+    final incomeColor = Theme.of(context).colorScheme.tertiary;
+    final outflowColor = Theme.of(context).colorScheme.secondary;
     final rangeEnd = c.period.value.end.subtract(const Duration(days: 1));
     final selected = rangeEnd.isAfter(DateTime.now())
         ? DateTime.now()
@@ -788,6 +745,7 @@ class CashFlowChart extends StatelessWidget {
             }),
           ),
           ExpansionTile(
+            key: const PageStorageKey('cashflow-exact'),
             tilePadding: EdgeInsets.zero,
             title: const Text('View exact values'),
             children: List.generate(
@@ -809,7 +767,7 @@ class CashFlowChart extends StatelessWidget {
   Widget _bar(double value, Color color) => Flexible(
     child: Container(
       width: 18,
-      height: math.max(value * 120, 2),
+      height: math.max(value * 120, 0),
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(5)),

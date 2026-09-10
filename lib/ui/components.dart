@@ -12,11 +12,11 @@ class PageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListView(
     key: PageStorageKey(storageKey),
-    padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+    padding: const EdgeInsets.fromLTRB(24, 12, 24, 104),
     children: [
       Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 760),
+          constraints: const BoxConstraints(maxWidth: 860),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: children,
@@ -274,25 +274,19 @@ class StatGrid extends StatelessWidget {
             .map(
               (item) => SizedBox(
                 width: (size.maxWidth - 12 * (columns - 1)) / columns,
-                child: Panel(
-                  padding: const EdgeInsets.all(16),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Icon(
-                        item.$3,
-                        size: 20,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                      const SizedBox(height: 8),
                       Text(
                         item.$1,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 8),
                       Text(
                         item.$2,
-                        style: Theme.of(context).textTheme.titleMedium,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ],
                   ),

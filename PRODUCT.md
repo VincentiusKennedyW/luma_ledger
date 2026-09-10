@@ -35,7 +35,7 @@ Existing implementation evidence: README.md, docs/ARCHITECTURE.md, docs/PRIVACY.
 
 ## Brand Commitments
 
-Name: Luma Ledger. The user requested replacing the signal-like ascending-bar icon. The current mark is an ivory ledger-shaped wallet with a gold coin; source and reproduction notes are in docs/BRANDING.md. Preserve truthful, plain financial terminology. Visual identity is being redesigned at the user's request; existing colors are implementation evidence, not a newly confirmed constraint.
+Name: Luma Ledger. The user requested replacing the signal-like ascending-bar icon. The current mark is an ivory ledger-shaped wallet with a gold coin; source and reproduction notes are in docs/BRANDING.md. Preserve truthful, plain financial terminology. The user selected the Pocket almanac redesign; the implemented visual system is documented in DESIGN.md and the Insights surface brief.
 
 ## Evidence on Hand
 

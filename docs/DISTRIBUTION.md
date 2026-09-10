@@ -2,12 +2,12 @@
 
 ## Android
 
-A release signing key has been created locally for this project. It is unique to this app and kept in ignored files:
+The original version 1.1 release used a private signing key. This relocated repository does not contain that identity. To build compatible updates, restore your original files privately to these ignored paths:
 
 - `android/luma-release.jks`
 - `android/key.properties`
 
-**Back up both files privately.** Keep the same key for future updates. Do not send either file to other people, commit them, or include them in a public source archive. The provided source archive excludes them.
+**Back up both files privately.** Keep the same key for future updates. Do not send either file to other people, commit them, or include them in a public source archive. This repository excludes them.
 
 To generate your own signing identity in a separate copy of the project, run `python3 tool/create_signing_key.py` once. It refuses to overwrite existing files. A Java keytool installation is required. The Gradle release configuration reads `android/key.properties` and does not fall back to debug signing.
 

@@ -8,6 +8,6 @@ The launcher mark is an ivory ledger-shaped wallet with one gold coin on evergre
 - Native exports: Android mipmap densities, iOS AppIcon asset catalog, and macOS AppIcon asset catalog.
 - Export command on macOS: `swift tool/render_icon.swift`
 
-The master was generated using the built-in image-generation tool on 2026-09-09. Native images are opaque RGB PNGs resized from that master, with unrounded square edges so the operating system controls the launcher mask. Do not recreate the retired signal-bar SVG or substitute chart bars for the brand mark. The in-app Insights chart icon remains a functional navigation symbol, not the brand icon.
+The master was generated using the built-in image-generation tool on 2026-09-09. Native images are opaque RGB PNGs resized from that master, with unrounded square edges so the operating system controls the launcher mask. Do not recreate the retired signal-bar SVG or substitute chart bars for the brand mark. The in-app Insights calendar icon is a functional navigation symbol.
 
-When re-exporting, preserve provenance using the exact prompt file. The icon does not settle the pending application-wide redesign direction.
+When re-exporting, preserve provenance using the exact prompt file. The icon is retained alongside the Pocket almanac application design.
