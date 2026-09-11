@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../controllers/ledger_controller.dart';
 import 'components.dart';
 import 'data_tools.dart';
+import '../receipts/receipt_inbox.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -76,6 +77,17 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
             const SectionTitle('Your data'),
+            if (Get.isRegistered<ReceiptInbox>())
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: const Icon(Icons.add_photo_alternate_outlined),
+                title: const Text('Import receipt'),
+                subtitle: const Text(
+                  'Share a payment image or choose one to review',
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Get.toNamed('/receipts'),
+              ),
             Panel(
               child: Column(
                 children: [
@@ -114,7 +126,7 @@ class SettingsPage extends StatelessWidget {
             ),
             const SectionTitle('About Luma'),
             const NoteBox(
-              'Luma 1.2 · On-device storage\n\nNo account, ads or analytics. Everything works offline. Each ledger has its own currency, wallets and history. Currency is fixed after creation to prevent accidental relabeling of money.\n\nThis app does not encrypt its database. Device security and OS backups protect your local files; exported backups are plain JSON. No bank connection or market-price tracking is included.',
+              'Luma 1.3 · On-device storage\n\nNo account or ads. Everything works offline. Android receipt reading happens on this device. Production Android builds have no internet permission; development builds may send OCR SDK diagnostics. Each ledger has its own currency, wallets and history. Currency is fixed after creation to prevent accidental relabeling of money.\n\nThis app does not encrypt its database. Device security and OS backups protect your local files; exported backups are plain JSON. No bank connection or market-price tracking is included.',
             ),
             TextButton.icon(
               onPressed: () async {

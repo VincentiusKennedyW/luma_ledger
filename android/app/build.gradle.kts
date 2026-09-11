@@ -63,3 +63,8 @@ android {
 flutter {
     source = "../.."
 }
+
+// Bundle Latin OCR so receipts can be read immediately, without a model download.
+dependencies {
+    implementation("com.google.mlkit:text-recognition:16.0.1")
+}

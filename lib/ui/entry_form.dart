@@ -6,13 +6,18 @@ import '../core/models.dart';
 import '../controllers/ledger_controller.dart';
 import 'components.dart';
 import 'theme.dart';
+import '../receipts/receipt_inbox.dart';
+import '../receipts/receipt_parser.dart';
+import 'receipt_import.dart' show showReceiptImage;
 
 class EntryFormPage extends StatefulWidget {
   final Entry? entry;
   final EntryKind initialKind;
+  final SharedReceipt? receipt;
   const EntryFormPage({
     super.key,
     this.entry,
+    this.receipt,
     this.initialKind = EntryKind.expense,
   });
   @override
@@ -25,31 +30,46 @@ class _EntryFormState extends State<EntryFormPage> {
   final amountFocus = FocusNode();
   late EntryKind kind;
   late DateTime date;
-  late String wallet, category;
+  late String? wallet;
+  late String category;
+  late String ledgerId;
+  ReceiptDraft? draft;
+  bool receiptConfirmed = false;
   String? toWallet;
   bool dirty = false, saving = false;
   @override
   void initState() {
     super.initState();
     final e = widget.entry;
+    ledgerId = c.activeId.value;
+    draft = widget.receipt?.draft;
     amount = TextEditingController(
       text: e == null
-          ? ''
+          ? draft?.amount == null
+                ? ''
+                : decimalMoney(
+                    draft!.amount!,
+                  ).replaceFirst(RegExp(r'\.00$'), '')
           : decimalMoney(e.amount).replaceFirst(RegExp(r'\.00$'), ''),
     );
-    description = TextEditingController(text: e?.description ?? '');
+    description = TextEditingController(
+      text: e?.description ?? draft?.merchant ?? '',
+    );
     note = TextEditingController(text: e?.note ?? '');
     kind = e?.kind ?? widget.initialKind;
-    date = e?.date ?? dayOnly(DateTime.now());
-    wallet = e?.walletId ?? c.wallets.first.id;
+    date = e?.date ?? draft?.date ?? dayOnly(DateTime.now());
+    wallet = e?.walletId ?? (draft == null ? c.wallets.first.id : null);
     category =
         e?.category ??
         (kind == EntryKind.income
             ? 'income'
             : kind == EntryKind.investment
             ? 'investment'
-            : 'food');
+            : draft == null
+            ? 'food'
+            : 'other');
     toWallet = e?.toWalletId;
+    dirty = draft != null;
   }
 
   @override
@@ -81,15 +101,25 @@ class _EntryFormState extends State<EntryFormPage> {
 
   Future<void> save() async {
     if (saving) return;
+    if (c.activeId.value != ledgerId) {
+      c.notify('The active ledger changed. Reopen this form before saving.');
+      return;
+    }
+    if (draft != null &&
+        (!receiptConfirmed || draft!.status == ReceiptStatus.failed)) {
+      c.notify(
+        'Check the receipt details before saving. Failed or pending payments cannot be imported.',
+      );
+      return;
+    }
     if (!form.currentState!.validate()) {
       amountFocus.requestFocus();
       return;
     }
-    setState(() => saving = true);
     final entry = Entry(
       id: widget.entry?.id ?? newId(),
-      ledgerId: c.activeId.value,
-      walletId: wallet,
+      ledgerId: ledgerId,
+      walletId: wallet!,
       date: date,
       amount: parseMoney(amount.text),
       kind: kind,
@@ -101,16 +131,62 @@ class _EntryFormState extends State<EntryFormPage> {
           : category,
       note: note.text.trim(),
       toWalletId: kind == EntryKind.transfer ? toWallet : null,
-      importKey: widget.entry?.importKey,
+      importKey: widget.entry?.importKey ?? draft?.importKey,
       review: false,
     );
-    final ok = await c.action(() => c.store.saveEntry(entry));
-    if (!mounted) return;
-    setState(() {
-      saving = false;
-      if (ok) dirty = false;
-    });
-    if (ok) {
+    setState(() => saving = true);
+    var ok = false;
+    try {
+      if (draft != null) {
+        final existing = await c.store.receiptMatch(
+          ledgerId,
+          draft!.importKey,
+          entry.amount,
+          entry.date,
+          entry.description,
+        );
+        if (!mounted) return;
+        if (existing != null) {
+          if (existing.importKey == draft!.importKey) {
+            c.notify(
+              'This receipt is already recorded in this ledger. Discard it from the receipt inbox.',
+            );
+            return;
+          }
+          if (!await confirm(
+            context,
+            'Possible duplicate',
+            'An expense with this date, amount and description already exists. Save another expense?',
+            action: 'Save another',
+          )) {
+            return;
+          }
+        }
+      }
+      if (!mounted) return;
+      ok = await c.action(() => c.store.saveEntry(entry));
+      if (ok && widget.receipt != null) {
+        try {
+          await Get.find<ReceiptInbox>().discard(widget.receipt!.id);
+        } catch (_) {
+          c.notify(
+            'Transaction saved. Discard its pending receipt from Import receipt.',
+          );
+        }
+      }
+    } catch (_) {
+      c.notify(
+        'Could not check or save this receipt. Your draft is still here; try again.',
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          saving = false;
+          if (ok) dirty = false;
+        });
+      }
+    }
+    if (ok && mounted) {
       HapticFeedback.lightImpact();
       Get.back();
       c.notify(
@@ -226,7 +302,13 @@ class _EntryFormState extends State<EntryFormPage> {
             onPressed: leave,
             icon: const Icon(Icons.arrow_back),
           ),
-          title: Text(editing ? 'Edit transaction' : 'Add transaction'),
+          title: Text(
+            editing
+                ? 'Edit transaction'
+                : draft != null
+                ? 'Review receipt'
+                : 'Add transaction',
+          ),
           actions: editing
               ? [
                   PopupMenuButton<String>(
@@ -305,51 +387,87 @@ class _EntryFormState extends State<EntryFormPage> {
               Expanded(
                 child: PageBody(
                   children: [
+                    if (draft != null) ...[
+                      Text(
+                        draft!.provider == null
+                            ? 'Shared payment receipt'
+                            : '${draft!.provider} payment receipt',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      NoteBox(
+                        draft!.status == ReceiptStatus.failed
+                            ? 'This receipt appears failed, pending or refunded. It cannot be saved as a completed expense.'
+                            : 'Check the amount, merchant and date against the image. Choose the wallet you paid from and the correct category.',
+                      ),
+                      if (!draft!.rupiah)
+                        const NoteBox(
+                          'No rupiah currency was detected. Only IDR receipts are supported; do not enter a foreign-currency amount here.',
+                        ),
+                      if (draft!.date == null)
+                        const NoteBox(
+                          'The transaction date could not be read. Today is shown; choose the date on your receipt.',
+                        ),
+                      if (draft!.reference != null)
+                        Text(
+                          'Reference: ${draft!.reference}',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                      OutlinedButton.icon(
+                        onPressed: () =>
+                            showReceiptImage(context, widget.receipt!.path),
+                        icon: const Icon(Icons.image_outlined),
+                        label: const Text('View receipt image'),
+                      ),
+                      const SizedBox(height: 12),
+                    ],
                     if (widget.entry?.review ?? false)
                       const NoteBox(
                         'This imported top-up may be a transfer. Choose a destination wallet if both sides are tracked. Saving confirms your classification.',
                       ),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: EntryKind.values
-                          .where(
-                            (k) =>
-                                k != EntryKind.checkpoint ||
-                                kind == EntryKind.checkpoint,
-                          )
-                          .map(
-                            (k) => ChoiceChip(
-                              label: Text(
-                                k == EntryKind.investment
-                                    ? 'Invest'
-                                    : kindLabel(k),
+                    if (draft == null)
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: EntryKind.values
+                            .where(
+                              (k) =>
+                                  k != EntryKind.checkpoint ||
+                                  kind == EntryKind.checkpoint,
+                            )
+                            .map(
+                              (k) => ChoiceChip(
+                                label: Text(
+                                  k == EntryKind.investment
+                                      ? 'Invest'
+                                      : kindLabel(k),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 2,
+                                  vertical: 6,
+                                ),
+                                selected: kind == k,
+                                onSelected: (_) => setState(() {
+                                  kind = k;
+                                  dirty = true;
+                                  if (k == EntryKind.income) {
+                                    category = 'income';
+                                  }
+                                  if (k == EntryKind.investment) {
+                                    category = 'investment';
+                                  }
+                                  if (k == EntryKind.expense &&
+                                      [
+                                        'income',
+                                        'investment',
+                                        'balance',
+                                      ].contains(category)) {
+                                    category = 'food';
+                                  }
+                                }),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 2,
-                                vertical: 6,
-                              ),
-                              selected: kind == k,
-                              onSelected: (_) => setState(() {
-                                kind = k;
-                                dirty = true;
-                                if (k == EntryKind.income) category = 'income';
-                                if (k == EntryKind.investment) {
-                                  category = 'investment';
-                                }
-                                if (k == EntryKind.expense &&
-                                    [
-                                      'income',
-                                      'investment',
-                                      'balance',
-                                    ].contains(category)) {
-                                  category = 'food';
-                                }
-                              }),
-                            ),
-                          )
-                          .toList(),
-                    ),
+                            )
+                            .toList(),
+                      ),
                     const SizedBox(height: 20),
                     TextFormField(
                       controller: amount,
@@ -404,6 +522,7 @@ class _EntryFormState extends State<EntryFormPage> {
                     const SizedBox(height: 12),
                     DropdownButtonFormField<String>(
                       itemHeight: null,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       initialValue: wallet,
                       isExpanded: true,
                       decoration: InputDecoration(
@@ -419,6 +538,8 @@ class _EntryFormState extends State<EntryFormPage> {
                             ),
                           )
                           .toList(),
+                      validator: (v) =>
+                          v == null ? 'Choose the wallet you paid from.' : null,
                       onChanged: (v) => setState(() {
                         wallet = v!;
                         if (toWallet == wallet) toWallet = null;
@@ -496,6 +617,19 @@ class _EntryFormState extends State<EntryFormPage> {
                       icon: const Icon(Icons.calendar_today_outlined),
                       label: Text(DateFormat('EEEE, d MMMM yyyy').format(date)),
                     ),
+                    if (draft != null)
+                      CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: receiptConfirmed,
+                        onChanged: draft!.status == ReceiptStatus.failed
+                            ? null
+                            : (v) =>
+                                  setState(() => receiptConfirmed = v ?? false),
+                        title: const Text(
+                          'I checked the image: this payment succeeded, is in IDR, and the details above are correct.',
+                        ),
+                      ),
                     if (date.isAfter(dayOnly(DateTime.now())))
                       const NoteBox(
                         'This future transaction will appear as scheduled. It enters actual balances and reports on its date.',
@@ -506,6 +640,7 @@ class _EntryFormState extends State<EntryFormPage> {
                       ),
                     const SizedBox(height: 20),
                     ExpansionTile(
+                      key: const PageStorageKey('entry-note'),
                       initiallyExpanded: note.text.isNotEmpty,
                       tilePadding: EdgeInsets.zero,
                       leading: const Icon(Icons.notes_rounded),
@@ -533,7 +668,13 @@ class _EntryFormState extends State<EntryFormPage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: FilledButton.icon(
-                      onPressed: saving ? null : save,
+                      onPressed:
+                          saving ||
+                              (draft != null &&
+                                  (!receiptConfirmed ||
+                                      draft!.status == ReceiptStatus.failed))
+                          ? null
+                          : save,
                       icon: saving
                           ? const SizedBox(
                               width: 18,

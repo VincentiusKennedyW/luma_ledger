@@ -1,8 +1,14 @@
 # Luma Ledger
 
-A daily expense tracker for Android and iOS, built with Flutter, GetX and local SQLite. A macOS runner is included for development. There is no server, account, advertising, or analytics.
+A daily expense tracker for Android and iOS, built with Flutter, GetX and local SQLite. A macOS runner is included for development. There is no server, account, or advertising. Production Android builds have no internet permission; see the privacy notes for development builds.
 
-## Version 1.2: Pocket almanac
+## Version 1.3: Share a receipt
+
+On Android, choose **Share → Luma Ledger** from a successful payment receipt, or **Settings → Import receipt → Choose receipt image**. Bundled offline text recognition suggests the amount, date and recipient. Choose an IDR ledger, check the image, select the wallet and category, confirm the details, then save. Exact receipt duplicates are blocked within a ledger; similar manually entered expenses prompt a warning. Nothing is posted automatically.
+
+Wondr QRIS labels are supported; GoPay, Permata and other layouts may need corrections. This reads a shared image, not notifications or a bank account. See [Receipt import](docs/RECEIPTS.md) for limits and data handling.
+
+## Pocket almanac
 
 A phone-first calendar view of your money: warm surfaces, indigo period controls, clear financial rows, and a rust-colored spending chart. Android uses a Material navigation bar and Add action on phones, with a navigation rail on wider screens. The wallet-and-coin launcher icon is documented in `docs/BRANDING.md`.
 
@@ -81,7 +87,7 @@ Historical CSV data may not cover every transaction. A recorded balance is not a
 
 Use **Settings → Export & backup → Complete backup** to save a JSON containing every ledger, wallet, category, transaction, budget, schedule and theme setting. Use **Restore a JSON backup** on another installation. Restore asks before replacing all existing local data, validates relationships, and rolls back on failure.
 
-CSV exports are for analysis; JSON is the full-fidelity migration format. Transfers and wallet relationships are restored only through JSON. Spreadsheet-sensitive text is escaped in CSV. There is no automatic cloud sync, encryption, attachment storage, app lock, bank connection or remote multi-user sharing.
+CSV exports are for analysis; JSON is the full-fidelity migration format. Transfers and wallet relationships are restored only through JSON. Spreadsheet-sensitive text is escaped in CSV. There is no automatic cloud sync, encryption, permanent receipt attachments, app lock, bank connection or remote multi-user sharing.
 
 Share the installation package with someone else; they create their own ledger on their own device. Share a backup only if you intentionally want to give them its financial data. Database files and backups are not bundled into builds.
 

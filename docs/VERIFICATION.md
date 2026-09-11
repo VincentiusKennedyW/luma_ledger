@@ -1,4 +1,18 @@
-# Luma 1.2 verification
+# Verification
+
+## Version 1.3 — receipt import
+
+Verified on 11 September 2026 with Flutter 3.35.6 / Dart 3.9.2. Static analysis reports no issues and all 54 portable tests pass. The additional tests cover conservative rupiah/date/merchant parsing, failed-payment blocking, required wallet/confirmation, and receipt layouts at portrait, landscape and tablet sizes with text scaling up to 3.2×.
+
+The Android receipt integration test exercises bundled OCR on a generated fictional Wondr-shaped receipt, including Rp1, then review, wallet validation, SQLite persistence, duplicate protection, ledger isolation and temporary-file deletion. Native captures include light, dark with 1.3× text, and the confirmation section. This does not validate the changing layouts of every bank app.
+
+A separate fixture Android app also sends real ACTION_SEND content URIs with temporary read grants to the offline preview. Cold-start delivery and bundled OCR work with no internet permission, including when the user has not created a ledger yet.
+
+The release merged manifest removes INTERNET and ACCESS_NETWORK_STATE contributed by dependencies. No signing identity is created or changed. An ARM64 debug preview is built with the same offline permission removals; the ordinary debug manifest is restored afterward for Flutter development. This preview is not a store-signed release.
+
+Receipt-specific design review and test limitations are recorded in RECEIPT_REVIEW.md. Existing version 1.2 verification below is historical; iPhone receipt sharing is not implemented.
+
+## Version 1.2 — historical verification
 
 Verification environment: Flutter 3.35.6 / Dart 3.9.2, 10 September 2026. Demo captures use fictional records only.
 

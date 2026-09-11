@@ -1,7 +1,7 @@
 name: luma_ledger
 description: A private, offline expense tracker built with Flutter, GetX and SQLite.
 publish_to: none
-version: 1.2.0+3
+version: 1.3.0+4
 environment:
   sdk: '>=3.9.0 <4.0.0'
 dependencies:

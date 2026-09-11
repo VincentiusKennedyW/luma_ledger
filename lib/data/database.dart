@@ -127,6 +127,30 @@ class LedgerDatabase {
       await txn.update('entries', e.toRow(), where: 'id=?', whereArgs: [e.id]);
     }
   });
+  Future<Entry?> receiptMatch(
+    String ledgerId,
+    String key,
+    int amount,
+    DateTime date,
+    String description,
+  ) async {
+    final exact = await db.query(
+      'entries',
+      where: 'ledger_id=? AND import_key=?',
+      whereArgs: [ledgerId, key],
+      limit: 1,
+    );
+    if (exact.isNotEmpty) return Entry.fromRow(exact.first);
+    final similar = await db.query(
+      'entries',
+      where:
+          "ledger_id=? AND kind='expense' AND amount=? AND date=? AND lower(trim(description))=lower(?)",
+      whereArgs: [ledgerId, amount, dateKey(date), description.trim()],
+      limit: 1,
+    );
+    return similar.isEmpty ? null : Entry.fromRow(similar.first);
+  }
+
   Future<int> importEntries(List<Entry> entries) => db.transaction((txn) async {
     var count = 0;
     for (final e in entries) {

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'controllers/ledger_controller.dart';
@@ -9,6 +10,8 @@ import 'ui/planning.dart';
 import 'ui/settings.dart';
 import 'ui/entry_form.dart';
 import 'ui/data_tools.dart';
+import 'receipts/receipt_inbox.dart';
+import 'ui/receipt_import.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,6 +19,14 @@ Future<void> main() async {
     final store = await LedgerDatabase.open();
     final controller = Get.put(LedgerController(store));
     await controller.initialize();
+    if (Platform.isAndroid) {
+      final inbox = Get.put(ReceiptInbox(), permanent: true);
+      try {
+        await inbox.start();
+      } catch (_) {
+        /* Ledger startup remains available if receipt import fails. */
+      }
+    }
     runApp(const LumaApp());
   } catch (_) {
     runApp(
@@ -74,11 +85,12 @@ class LumaApp extends StatelessWidget {
         data: MediaQuery.of(
           context,
         ).copyWith(disableAnimations: MediaQuery.of(context).disableAnimations),
-        child: child!,
+        child: ReceiptArrival(child: child!),
       ),
       initialRoute: '/',
       getPages: [
         GetPage(name: '/', page: () => const AppShell()),
+        GetPage(name: '/receipts', page: () => const ReceiptImportPage()),
         GetPage(
           name: '/entry',
           page: () => _guard(
@@ -183,6 +195,15 @@ class AppShell extends StatelessWidget {
             ],
           ),
           actions: [
+            if (Get.isRegistered<ReceiptInbox>())
+              IconButton(
+                tooltip: 'Import receipt',
+                onPressed: () => Get.toNamed('/receipts'),
+                icon: Badge(
+                  isLabelVisible: Get.find<ReceiptInbox>().items.isNotEmpty,
+                  child: const Icon(Icons.add_photo_alternate_outlined),
+                ),
+              ),
             if (!large)
               IconButton(
                 tooltip: 'Import CSV',
