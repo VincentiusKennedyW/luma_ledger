@@ -10,6 +10,8 @@ A separate fixture Android app also sends real ACTION_SEND content URIs with tem
 
 The release merged manifest removes INTERNET and ACCESS_NETWORK_STATE contributed by dependencies. No signing identity is created or changed. An ARM64 debug preview is built with the same offline permission removals; the ordinary debug manifest is restored afterward for Flutter development. This preview is not a store-signed release.
 
+A later cross-task share check exposed two MainActivity instances with singleTop. The final APK switches to singleTask with the package affinity; the build and packaged manifest were verified. The final repeated-share runtime confirmation was interrupted when the isolated emulator became unavailable and remains to be completed on a test device. No tests were run against the subsequently connected personal phone.
+
 Receipt-specific design review and test limitations are recorded in RECEIPT_REVIEW.md. Existing version 1.2 verification below is historical; iPhone receipt sharing is not implemented.
 
 ## Version 1.2 — historical verification

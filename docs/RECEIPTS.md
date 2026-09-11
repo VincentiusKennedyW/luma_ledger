@@ -23,8 +23,8 @@ Production Android builds enforce offline behavior by removing internet/network-
 
 ## Implementation and reproduction
 
-Android ACTION_SEND with image/* and content URI read grants feeds the native receipt bridge. ACTION_OPEN_DOCUMENT provides manual import. A MethodChannel returns inbox updates to Flutter. The bridge uses bundled com.google.mlkit:text-recognition:16.0.1. Native files are kept in noBackupFilesDir; SQLite uses the existing unique ledger/import-key constraint, without a schema migration.
+Android ACTION_SEND with image/* and content URI read grants feeds the native receipt bridge. MainActivity uses singleTask with the package affinity, so a share from another app returns through onNewIntent to the existing Flutter screen instead of creating competing receipt inboxes in separate activities. ACTION_OPEN_DOCUMENT provides manual import. A MethodChannel returns inbox updates to Flutter. The bridge uses bundled com.google.mlkit:text-recognition:16.0.1. Native files are kept in noBackupFilesDir; SQLite uses the existing unique ledger/import-key constraint, without a schema migration.
 
 Run `flutter test` for parser, review validation and responsive coverage. On a disposable Android emulator, run `flutter drive --driver=test_driver/integration_test.dart --target=integration_test/receipt_test.dart -d emulator-5554`. The native test clears that installation’s pending inbox, generates its own fictional receipt, exercises real OCR and SQLite, and captures the review flow. Never run it on an installation holding someone’s pending receipts.
 
-References: [Android receiving shared data](https://developer.android.com/develop/ui/compose/sharing/receive), [bundled Android text recognition](https://developers.google.com/ml-kit/vision/text-recognition/v2/android).
+References: [Android activity launch modes](https://developer.android.com/guide/topics/manifest/activity-element#lmode), [Android receiving shared data](https://developer.android.com/develop/ui/compose/sharing/receive), [bundled Android text recognition](https://developers.google.com/ml-kit/vision/text-recognition/v2/android).
